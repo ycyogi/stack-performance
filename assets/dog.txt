@@ -1,0 +1,2 @@
+Placeholder for dog image.
+Replace with a real image at assets/dog.png and update require() in Dog1Screen.
