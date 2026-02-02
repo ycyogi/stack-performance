@@ -1,0 +1,4 @@
+# Update these values.
+app_identifier(ENV.fetch('IOS_BUNDLE_ID', 'com.example.StackPerformance'))
+apple_id(ENV['APPLE_ID'])
+team_id(ENV['APPLE_TEAM_ID'])
