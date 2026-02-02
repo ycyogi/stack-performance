@@ -28,25 +28,22 @@ npx react-native start
 npx react-native run-ios --simulator "iPhone 17 Pro" --no-packager
 ```
 
-## CI: Build & upload to TestFlight (GitHub Actions)
+## CI: Build an Ad Hoc IPA (GitHub Actions)
 
-This repo includes a GitHub Actions workflow: `.github/workflows/ios-testflight.yml`.
+This repo includes a GitHub Actions workflow:
+- `.github/workflows/ios-adhoc-ipa.yml`
 
-Recommended distribution for installing on your phone: **TestFlight**.
+This produces a **Release Ad Hoc** `.ipa` as a workflow artifact (no App Store / no TestFlight).
 
 ### Required GitHub Secrets
 
-- `APP_STORE_CONNECT_KEY_ID`
-- `APP_STORE_CONNECT_ISSUER_ID`
-- `APP_STORE_CONNECT_API_KEY_P8` (base64 of your AuthKey_XXXX.p8)
-- `APPLE_TEAM_ID`
-- `IOS_BUNDLE_ID` (e.g. `com.yourcompany.stackperformance`)
+- `APPLE_TEAM_ID` (your team id)
+- `IOS_BUNDLE_ID` (e.g. `org.reactjs.native.example.StackPerformance`)
+- `IOS_SIGNING_CERT_P12_BASE64` (base64 of your exported `Apple Distribution` .p12)
+- `IOS_SIGNING_CERT_PASSWORD` (password you used when exporting the .p12)
+- `IOS_ADHOC_PROFILE_BASE64` (base64 of the downloaded Ad Hoc `.mobileprovision`)
 
-For signing, this workflow uses **fastlane match** (recommended):
-- `MATCH_GIT_URL` (private repo URL for match)
-- `MATCH_PASSWORD`
-
-After secrets are set, run the workflow manually (Actions → iOS (TestFlight) → Run workflow). Then install via the TestFlight app.
+After secrets are set, run the workflow manually (Actions → **iOS (Ad Hoc IPA)** → Run workflow). Download the IPA artifact from the run.
 
 ### Replace the dog image
 
