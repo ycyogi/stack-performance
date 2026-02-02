@@ -13,8 +13,10 @@ export default function Dog3Screen({ navigation }: Props) {
       <Button
         title="Done"
         onPress={() => {
-          // Pop the root "Flow" screen to return to Tabs/Home.
-          navigation.getParent()?.getParent()?.goBack();
+          // Ensure we're at the top of the Flow stack, then close the Flow
+          // (pops the root "Flow" screen, returning to Tabs/Home).
+          navigation.popToTop();
+          navigation.getParent()?.goBack();
         }}
       />
     </View>
