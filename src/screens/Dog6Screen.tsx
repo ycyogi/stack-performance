@@ -3,20 +3,26 @@ import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { FlowStackParamList } from '../navigation/types';
 
-type Props = NativeStackScreenProps<FlowStackParamList, 'Dog2'>;
+type Props = NativeStackScreenProps<FlowStackParamList, 'Dog6'>;
 
-export default function Dog2Screen({ navigation }: Props) {
+export default function Dog6Screen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Dog 2</Text>
+      <Text style={styles.title}>Dog 6</Text>
       <View style={styles.card}>
         <Image
-          source={require('../../assets/dog2.jpg')}
+          source={require('../../assets/dog6.jpg')}
           style={styles.image}
           resizeMode="cover"
         />
       </View>
-      <Button title="Next" onPress={() => navigation.navigate('Dog3')} />
+      <Button
+        title="Done"
+        onPress={() => {
+          navigation.popToTop();
+          navigation.getParent()?.goBack();
+        }}
+      />
     </View>
   );
 }

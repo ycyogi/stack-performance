@@ -10,9 +10,8 @@ export default function Dog1Screen({ navigation }: Props) {
     <View style={styles.container}>
       <Text style={styles.title}>Dog 1</Text>
       <View style={styles.card}>
-        {/* Placeholder: replace with your real dog photo at assets/dog.png */}
         <Image
-          source={require('../../assets/dog-placeholder.png')}
+          source={require('../../assets/dog1.jpg')}
           style={styles.image}
           resizeMode="cover"
         />

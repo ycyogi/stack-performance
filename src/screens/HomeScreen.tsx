@@ -1,16 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation/types';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { TabsParamList, RootStackParamList } from '../navigation/types';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Tabs'>;
+type Props = BottomTabScreenProps<TabsParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
-      <Text style={styles.subtitle}>Tap to start the 3-screen flow.</Text>
-      <Button title="Start Flow" onPress={() => navigation.navigate('Flow')} />
+      <Text style={styles.subtitle}>Tap to start the 6-screen dog flow.</Text>
+      <Button
+        title="Start Flow"
+        onPress={() =>
+          (navigation.getParent() as any)?.navigate('Flow' as keyof RootStackParamList)
+        }
+      />
     </View>
   );
 }

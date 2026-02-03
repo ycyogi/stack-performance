@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { FlowStackParamList } from '../navigation/types';
 
@@ -9,16 +9,14 @@ export default function Dog3Screen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dog 3</Text>
-      <Text style={styles.subtitle}>End of the flow.</Text>
-      <Button
-        title="Done"
-        onPress={() => {
-          // Ensure we're at the top of the Flow stack, then close the Flow
-          // (pops the root "Flow" screen, returning to Tabs/Home).
-          navigation.popToTop();
-          navigation.getParent()?.goBack();
-        }}
-      />
+      <View style={styles.card}>
+        <Image
+          source={require('../../assets/dog3.jpg')}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      </View>
+      <Button title="Next" onPress={() => navigation.navigate('Dog4')} />
     </View>
   );
 }
@@ -30,6 +28,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
   },
-  title: { fontSize: 28, fontWeight: '700', marginBottom: 8 },
-  subtitle: { fontSize: 16, opacity: 0.7, marginBottom: 16 },
+  title: { fontSize: 28, fontWeight: '700', marginBottom: 16 },
+  card: {
+    width: 260,
+    height: 260,
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginBottom: 16,
+    backgroundColor: '#eee',
+  },
+  image: { width: '100%', height: '100%' },
 });
