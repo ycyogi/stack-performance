@@ -48,6 +48,7 @@ jobs:
           IOS_SIGNING_CERT_P12_BASE64: ${{ secrets.IOS_SIGNING_CERT_P12_BASE64 }}
           IOS_SIGNING_CERT_PASSWORD: ${{ secrets.IOS_SIGNING_CERT_PASSWORD }}
           IOS_ADHOC_PROFILE_BASE64: ${{ secrets.IOS_ADHOC_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           set -euo pipefail
           set -x
@@ -57,21 +58,27 @@ jobs:
           echo "Xcode: $(xcodebuild -version || true)"
           echo "whoami: $(whoami)"
 
+          : "${KEYCHAIN_PASSWORD:?Missing KEYCHAIN_PASSWORD secret}"
+
           echo "$IOS_SIGNING_CERT_P12_BASE64" | base64 --decode > /tmp/cert.p12
           echo "$IOS_ADHOC_PROFILE_BASE64" | base64 --decode > /tmp/profile.mobileprovision
 
-          security create-keychain -p "" build.keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p "" build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
           security set-keychain-settings -t 3600 -u build.keychain
+
+          # Ensure the build keychain is in the user search list so codesign/xcodebuild can find identities
+          security list-keychains -d user -s build.keychain
 
           echo "🔐 Keychains (user):"
           security list-keychains -d user || true
           echo "🔐 Default keychain:"
           security default-keychain || true
 
-          security import /tmp/cert.p12 -k build.keychain -P "$IOS_SIGNING_CERT_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "" build.keychain
+          # -A grants access to all apps; easiest for CI
+          security import /tmp/cert.p12 -k build.keychain -P "$IOS_SIGNING_CERT_PASSWORD" -A
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
 
           echo "🔎 Code signing identities (default search list):"
           security find-identity -v -p codesigning || true
