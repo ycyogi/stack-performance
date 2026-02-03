@@ -12,7 +12,8 @@ platform :ios do
       configuration: "Release",
       export_method: "ad-hoc",
       output_directory: "./artifacts",
-      output_name: "StackPerformance.ipa"
+      output_name: "StackPerformance.ipa",
+      xcargs: "DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}"
     )
   end
 end
