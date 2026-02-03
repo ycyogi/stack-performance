@@ -15,7 +15,13 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           # React Native 0.83 requires Xcode >= 16.1
-          xcode-version: '16.2'
+          xcode-version: '16.1'
+
+      - name: Xcode/SDK sanity check
+        run: |
+          xcodebuild -version
+          xcodebuild -showsdks
+          ls -1 /Applications | grep Xcode || true
 
       - name: Set up Node
         uses: actions/setup-node@v4
