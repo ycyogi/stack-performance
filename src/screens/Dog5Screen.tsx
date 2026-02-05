@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import FastImage from '@d11/react-native-fast-image';
+import { Image } from 'expo-image';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { FlowStackParamList } from '../navigation/types';
 
@@ -11,10 +11,10 @@ export default function Dog5Screen({ navigation }: Props) {
     <View style={styles.container}>
       <Text style={styles.title}>Dog 5</Text>
       <View style={styles.card}>
-        <FastImage
+        <Image
           source={require('../../assets/dog5.jpg')}
           style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
+          contentFit="cover"
         />
       </View>
       <Button title="Next" onPress={() => navigation.navigate('Dog6')} />
