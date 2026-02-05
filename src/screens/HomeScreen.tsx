@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { TabsParamList, RootStackParamList } from '../navigation/types';
+import type { TabsParamList } from '../navigation/types';
 
 type Props = BottomTabScreenProps<TabsParamList, 'Home'>;
 
@@ -12,9 +12,7 @@ export default function HomeScreen({ navigation }: Props) {
       <Text style={styles.subtitle}>Tap to start the 6-screen dog flow.</Text>
       <Button
         title="Start Flow"
-        onPress={() =>
-          (navigation.getParent() as any)?.navigate('Flow' as keyof RootStackParamList)
-        }
+        onPress={() => (navigation.getParent() as any)?.push('Flow')}
       />
     </View>
   );

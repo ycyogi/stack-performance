@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { FlowStackParamList } from '../navigation/types';
 
@@ -10,15 +11,25 @@ export default function Dog6Screen({ navigation }: Props) {
     <View style={styles.container}>
       <Text style={styles.title}>Dog 6</Text>
       <View style={styles.card}>
-        <Image
+        <FastImage
           source={require('../../assets/dog6.jpg')}
           style={styles.image}
-          resizeMode="cover"
+          resizeMode={FastImage.resizeMode.cover}
         />
       </View>
       <Button
         title="Done"
-        onPress={() => {
+        onPress={async () => {
+          // Optional: clear image caches to reduce memory/disk pressure between flows.
+          // Note: when using local bundled images (require(...)), cache clearing may not have
+          // a dramatic effect, but it helps for remote images.
+          try {
+            await FastImage.clearMemoryCache();
+            await FastImage.clearDiskCache();
+          } catch {
+            // ignore
+          }
+
           navigation.popToTop();
           navigation.getParent()?.goBack();
         }}

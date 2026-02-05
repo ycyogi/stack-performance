@@ -17,7 +17,7 @@ export default function RootNavigator() {
       <Root.Screen
         name="Flow"
         component={FlowStack}
-        options={{ title: 'Flow' }}
+        options={{ headerShown: false, presentation: 'modal' }}
       />
     </Root.Navigator>
   );
